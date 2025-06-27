@@ -1,0 +1,30 @@
+name: 🌿 Random Daily Commit
+
+on:
+  workflow_dispatch:  # Manual trigger
+  schedule:
+    - cron: '30 2 * * *'  # Runs at 2:30 AM UTC
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate random sleep (up to 3 hours)
+        id: sleep
+        run: |
+          SECONDS=$(( RANDOM % 10800 ))  # 0–3 hours
+          echo "Sleeping for $SECONDS seconds..."
+          sleep $SECONDS
+
+      - name: Make a random daily commit
+        run: |
+          echo "🌱 Commit on $(date)" >> commits.txt
+          git config user.name "Karthick S"
+          git config user.email "irakkarthi@ksriet.ac.in"
+          git add commits.txt
+          git commit -m "chore: random commit on $(date)"
+          git push
