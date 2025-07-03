@@ -1,4 +1,4 @@
-name: Daily Random Commit
+name: Random Daily Commit
 
 on:
   schedule:
